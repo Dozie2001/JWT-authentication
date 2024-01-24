@@ -27,7 +27,7 @@ const authenticateToken = (req, res, next) => {
 
 app.get('/post', authenticateToken, (req, res) => {
   console.log(req.user);
-  res.json(post.filter((pos) => pos.username == req.user.name));
+  res.json(post.filter((pos) => pos.username == req.user.name && pos.password == user.password));
 });
 
 app.get('/:id', (req, res) => {

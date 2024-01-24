@@ -1,11 +1,31 @@
-GET http://localhost:3000/495f6844-0b72-4776-905b-ac7b0846d8c3
-###
+GET http://localhost:3000/post
+Authorization: Bearer 
 
-POST http://localhost:3000/495f6844-0b72-4776-905b-ac7b0846d8c3
+###
+POST http://localhost:4000/login
 Content-Type: application/json
 
 {
-    "username": "Chidozie",
+    "username": "Dozie",
     "password": "Dozzy2001..."
 }
 
+###
+
+POST http://localhost:4000/signin
+Content-Type: application/json
+
+{
+    "username": "Dozie",
+    "password": "Dozzy2001..."
+}
+
+
+###
+
+POST http://localhost:4000/token
+Content-Type: application/json
+
+{ 
+    "token": 
+}
