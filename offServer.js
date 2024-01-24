@@ -61,22 +61,32 @@ app.post('/signin', async (req, res) => {
 
 app.post('/login', authenticateUser, (req, res) => {
   const user = { name: req.body.username}
-  const accessToken = generateAccesToken(user);
   const refreshToken = jwt.sign(user, process.env.REFRESH_SECRET_TOKEN)
-  return res.json({ accessToken: accessToken, refreshToken: refreshToken });
+  return res.json({refreshToken: refreshToken });
 });
 let refreshTokens = []
 
-app.post('/token',   (req, res) => {
-  let refreshToken = req.body.token
-  if (refreshToken == null) return res.sendStatus(401)
-  if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
+app.post('/token', (req, res) => {
+  const refreshToken = req.body.token;
+  
+  if (!refreshToken) {
+    return res.sendStatus(401);
+  }
+
+  if (!refreshTokens.includes(refreshToken)) {
+    return res.sendStatus(403);
+  }
+
   jwt.verify(refreshToken, process.env.REFRESH_SECRET_TOKEN, (err, user) => {
-       if (err) return res.sendStatus(401)
-       const accessToken = generateAccesToken({name: user.name});
-      res.json({accessToken: accessToken})
-  })
-})
+    if (err) {
+      return res.sendStatus(401);
+    }
+
+    const accessToken = generateAccesToken(user);
+    res.json({ accessToken: accessToken });
+  });
+});
+
 
 
 app.get('/:id', (req, res) => {
