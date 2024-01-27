@@ -1,13 +1,17 @@
 GET http://localhost:3000/post
-Authorization: Bearer 
+Authorization: Bearer
+
 
 ###
+
+
+
 POST http://localhost:4000/login
 Content-Type: application/json
 
 {
     "username": "Dozie",
-    "password": "Dozzy2001..."
+    "password": "Daddy2111"
 }
 
 ###
@@ -17,7 +21,7 @@ Content-Type: application/json
 
 {
     "username": "Dozie",
-    "password": "Dozzy2001..."
+    "password": "Daddy2111"
 }
 
 
@@ -27,6 +31,5 @@ POST http://localhost:4000/token
 Content-Type: application/json
 
 { 
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRG96aWUiLCJpYXQiOjE3MDYxNDAwNjl9.OBc2fUfEla2aUhJFHl6Jt5s1W82k7XdL-5ZzehDRY9c"
-
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRG96aWUiLCJpYXQiOjE3MDYzNzYzMTZ9.da4w1FdGNPwmH7HRY-mttUdJCyqqUGvOVKGD5hcnT04"
 }

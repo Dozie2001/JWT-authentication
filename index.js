@@ -9,17 +9,21 @@ app.use(express.json());
 
 const post = [];
 
-
-
 const authenticateToken = (req, res, next) => {
-  const autheHeader = req.headers['authorization'];
-  const token = autheHeader && autheHeader.split(' ')[1];
-  if (token == null) return res.sendStatus(401);
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token) {
+    console.log('Token not found');
+    return res.sendStatus(401);
+  }
 
   jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, (err, user) => {
-    if (err) return res.sendStatus(403);
+    if (err) {
+      console.log('Token verification failed:', err);
+      return res.sendStatus(403);
+    }
     req.user = user;
-   
     next();
   });
 };
@@ -27,7 +31,7 @@ const authenticateToken = (req, res, next) => {
 
 app.get('/post', authenticateToken, (req, res) => {
   console.log(req.user);
-  res.json(post.filter((pos) => pos.username == req.user.name && pos.password == user.password));
+  res.json(post.filter((pos) => pos.username === req.user.name));
 });
 
 app.get('/:id', (req, res) => {

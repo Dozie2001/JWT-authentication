@@ -11,7 +11,7 @@ const post = [];
 
 // A function that creates generate access token
 const generateAccesToken = (user) => {
-  return jwt.sign(user, process.env.ACCESS_SECRET_TOKEN, {expiresIn: '15s'});
+  return jwt.sign(user, process.env.ACCESS_SECRET_TOKEN, {expiresIn: '60s'});
 
 
 }
@@ -58,13 +58,15 @@ app.post('/signin', async (req, res) => {
     return res.status(500).json({ message: err });
   }
 });
+let refreshTokens = []
 
 app.post('/login', authenticateUser, (req, res) => {
   const user = { name: req.body.username}
-  const refreshToken = jwt.sign(user, process.env.REFRESH_SECRET_TOKEN)
-  return res.json({refreshToken: refreshToken });
+  const refreshToken = jwt.sign(user, process.env.REFRESH_SECRET_TOKEN);
+  refreshTokens.push(refreshToken);
+  return res.json({refreshToken: refreshToken});
 });
-let refreshTokens = []
+
 
 app.post('/token', (req, res) => {
   const refreshToken = req.body.token;
@@ -79,11 +81,11 @@ app.post('/token', (req, res) => {
 
   jwt.verify(refreshToken, process.env.REFRESH_SECRET_TOKEN, (err, user) => {
     if (err) {
-      return res.sendStatus(401);
+      res.sendStatus(401);
     }
 
     const accessToken = generateAccesToken(user);
-    res.json({ accessToken: accessToken });
+    return res.json({ accessToken: accessToken });
   });
 });
 
